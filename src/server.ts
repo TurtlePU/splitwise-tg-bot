@@ -1,13 +1,15 @@
 import startBot from './bot/main';
 
-const token = process.env.TG_TOKEN || 'none';
-const port = +(process.env.PORT || 8080);
 const authLink = process.env.AUTH_LINK || 'none';
+const port = +(process.env.PORT || 8080);
+const token = process.env.TG_TOKEN || 'none';
+const url = process.env.APP_URL || 'none';
 
 console.log(`
-token: ${token},
-port: ${port},
 authLink: ${authLink}
+port: ${port}
+token: ${token}
+url: ${url}
 `);
 
-startBot({ token, port, authLink });
+startBot({ authLink, port, token, url });

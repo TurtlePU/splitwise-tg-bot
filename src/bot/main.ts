@@ -4,6 +4,7 @@ import commands from './commands/export';
 
 export interface StartOptions {
     token: string;
+    url: string;
     port: number;
     authLink: string;
 }
@@ -16,4 +17,6 @@ export default function start(options: StartOptions) {
     commands.forEach(({ regexp, callback }) =>
         bot.onText(regexp, callback({ bot, ...options }))
     );
+
+    return bot.setWebHook(`${options.url}/bot${token}`);
 }
