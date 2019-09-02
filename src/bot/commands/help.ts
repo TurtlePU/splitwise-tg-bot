@@ -1,13 +1,19 @@
 import TelegramBot from 'node-telegram-bot-api';
 
-import UI from '../ui/export';
+import Locale from '@locale';
 
-export default (ctx: { bot: TelegramBot }) =>
-    (msg: TelegramBot.Message) => {
+import { Command } from './command';
+
+const command: Command = {
+    regexp: /\/help/,
+    callback: (ctx: { bot: TelegramBot }) => (msg: TelegramBot.Message) => {
         if (msg.from) {
             ctx.bot.sendMessage(
                 msg.chat.id,
-                UI(msg.from.language_code).help.text()
+                Locale(msg.from.language_code).help.text()
             );
         }
-    };
+    }
+};
+
+export default command;

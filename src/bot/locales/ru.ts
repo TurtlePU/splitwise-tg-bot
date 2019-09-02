@@ -1,4 +1,5 @@
 const locale: Locale = {
+    name: 'ru',
     start: {
         text: (name: string, authLink?: string) => {
             if (authLink) {

@@ -1,7 +1,10 @@
 import start from './start';
 import help from './help';
+import { Command } from './command';
 
-export default [
-    { regexp: /\/start/, callback: start },
-    { regexp: /\/help/, callback: help }
+const commands: Command[] = [
+    start,
+    help
 ];
+
+export default commands;

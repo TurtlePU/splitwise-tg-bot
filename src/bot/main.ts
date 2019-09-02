@@ -1,3 +1,4 @@
+import Express from 'express';
 import Bot from 'node-telegram-bot-api';
 
 import commands from '@commands';
@@ -5,18 +6,21 @@ import commands from '@commands';
 export interface StartOptions {
     token: string;
     url: string;
-    port: number;
-    authLink: string;
-}
+    authLink: (id: number) => string;
+};
 
-export default function start(options: StartOptions) {
-    const { token, port } = options;
+export default async function start(options: StartOptions) {
+    const { token, url } = options;
 
-    const bot = new Bot(token, { webHook: { port } });
+    const bot = new Bot(token);
+    await bot.setWebHook(url);
 
     commands.forEach(({ regexp, callback }) =>
         bot.onText(regexp, callback({ bot, ...options }))
     );
 
-    return bot.setWebHook(`${options.url}/bot${token}`);
-}
+    return (req: Express.Request, res: Express.Response) => {
+        bot.processUpdate(req.body);
+        res.sendStatus(200);
+    };
+};
