@@ -3,7 +3,7 @@ const locale: Locale = {
         text: (name: string, authLink?: string) => {
             if (authLink) {
                 return `Привет, ${name}!\n` +
-                    `Прежде чем начать работу, войди в Splitwise <a href="${authLink}">по этой ссылке</a>.`;
+                    `Прежде чем начать работу, войди в Splitwise [по этой ссылке](${authLink}).`;
             } else {
                 return `Снова привет, ${name}!\n` +
                     `Ты уже вошёл в Splitwise. Чтобы узнать, как мной управлять, введи /help.`;
