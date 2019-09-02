@@ -1,6 +1,6 @@
 import Bot from 'node-telegram-bot-api';
 
-import commands from './commands/export';
+import commands from '@commands';
 
 export interface StartOptions {
     token: string;

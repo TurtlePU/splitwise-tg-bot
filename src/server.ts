@@ -1,5 +1,7 @@
 import 'module-alias/register';
 
+import http from 'http';
+
 import startBot from './bot/main';
 
 const authLink = process.env.AUTH_LINK || 'https://ya.ru';
@@ -14,4 +16,6 @@ token: ${token}
 url: ${url}
 `);
 
-startBot({ authLink, port, token, url });
+startBot({ authLink, port, token, url: `https://${url}` });
+
+setInterval(() => http.get(`http://${url}`), 1000 * 60 * 15);

@@ -11,7 +11,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@ui": [ "src/bot/ui/export" ]
+      "@ui": [ "src/bot/ui/export" ],
+      "@commands": [ "src/bot/commands/export" ]
     }
   }
 }
