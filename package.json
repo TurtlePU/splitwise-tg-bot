@@ -26,6 +26,10 @@
   },
   "devDependencies": {
     "@types/node-telegram-bot-api": "^0.31.0",
+    "module-alias": "^2.2.1",
     "typescript": "^3.6.2"
+  },
+  "_moduleAliases": {
+    "@ui": "build/bot/ui/export.js"
   }
 }

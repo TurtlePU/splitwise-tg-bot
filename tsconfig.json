@@ -8,6 +8,10 @@
     "noImplicitThis": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ui": [ "src/bot/ui/export" ]
+    }
   }
 }

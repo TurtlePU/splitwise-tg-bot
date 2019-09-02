@@ -1,3 +1,5 @@
+import 'module-alias/register';
+
 import startBot from './bot/main';
 
 const authLink = process.env.AUTH_LINK || 'none';
