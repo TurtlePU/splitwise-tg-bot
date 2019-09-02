@@ -22,11 +22,11 @@
   },
   "homepage": "https://github.com/TurtlePU/splitwise-tg-bot#readme",
   "dependencies": {
+    "module-alias": "^2.2.1",
     "node-telegram-bot-api": "^0.30.0"
   },
   "devDependencies": {
     "@types/node-telegram-bot-api": "^0.31.0",
-    "module-alias": "^2.2.1",
     "typescript": "^3.6.2"
   },
   "_moduleAliases": {
