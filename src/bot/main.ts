@@ -6,7 +6,7 @@ import commands from '@commands';
 export interface StartOptions {
     token: string;
     url: string;
-    authLink: (id: number) => string;
+    authLink: string;
 };
 
 export default async function start(options: StartOptions) {

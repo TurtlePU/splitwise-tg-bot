@@ -3,7 +3,7 @@ import 'module-alias/register';
 import http from 'http';
 
 import startBot from './bot/main';
-import startServer, { authLink, botUrl } from './express';
+import startServer, { botUrl } from './express';
 
 const port = +(process.env.PORT || 8080);
 const token = process.env.TG_TOKEN || 'none';
@@ -17,7 +17,7 @@ url: ${url}
 
 (async function start() {
     const botWebhook = await startBot({
-        authLink: id => authLink(url, id),
+        authLink: 'https://ya.ru',
         token, url: botUrl(url)
     });
     await startServer({ port, botWebhook });
