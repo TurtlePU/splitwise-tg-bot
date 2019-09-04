@@ -33,8 +33,8 @@ export function startOAuth({ consumer, serviceUrls, callbackUrl }: OAuthStartOpt
     clbUrl = callbackUrl;
 }
 
-export async function getToken(code: string) {
-    return new Promise((resolve, reject) => {
+export async function getKey(code: string) {
+    return new Promise((resolve: (value: string) => void, reject) => {
         client.getOAuthAccessToken(
             code,
             {
@@ -45,7 +45,8 @@ export async function getToken(code: string) {
                 if (err || result.error) {
                     reject(err || result.error);
                 } else {
-                    resolve(accessToken);
+                    console.log('Token:', accessToken);
+                    resolve('accessToken');
                 }
             }
         );
