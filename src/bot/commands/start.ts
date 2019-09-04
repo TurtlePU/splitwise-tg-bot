@@ -6,11 +6,11 @@ import { Command } from './command';
 
 const command: Command = {
     regexp: /\/start/,
-    callback: (ctx: { bot: TelegramBot, authLink: string }) => (msg: TelegramBot.Message) => {
+    callback: ({ bot, authLink }) => (msg: TelegramBot.Message) => {
         if (msg.from) {
-            ctx.bot.sendMessage(
+            bot.sendMessage(
                 msg.chat.id,
-                Locale(msg.from.language_code).start.text(msg.from.first_name, ctx.authLink),
+                Locale(msg.from.language_code).start.text(msg.from.first_name, authLink),
                 { parse_mode: 'Markdown' }
             );
         }

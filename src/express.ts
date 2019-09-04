@@ -18,8 +18,8 @@ export function startServer(options: StartOptions) {
     const app = Express();
     app.use(bodyParser.json());
     app.post(`/bot`, options.botWebhook);
-    app.get(`/clb`, (req, res) => {
-        res.send(``);
+    app.get(`/clb`, (req, _) => {
+        console.log(req.query);
     });
     return new Promise(resolve => app.listen(options.port, resolve));
 };
