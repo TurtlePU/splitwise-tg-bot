@@ -15,6 +15,7 @@ export type OAuthStartOptions = {
 
 var client: OAuth.OAuth2;
 var authUrl: string;
+var clbUrl: string;
 
 export function authorizeUrl() {
     return authUrl;
@@ -29,16 +30,24 @@ export function startOAuth({ consumer, serviceUrls, callbackUrl }: OAuthStartOpt
         redirect_uri: callbackUrl,
         response_type: 'code'
     });
+    clbUrl = callbackUrl;
 }
 
 export async function getToken(code: string) {
     return new Promise((resolve, reject) => {
-        client.getOAuthAccessToken(code, (err, accessToken, _, result) => {
-            if (err || result.error) {
-                reject(err || result.error);
-            } else {
-                resolve(accessToken);
+        client.getOAuthAccessToken(
+            code,
+            {
+                redirect_uri: clbUrl,
+                grant_type: 'authorization_code'
+            },
+            (err, accessToken, _, result) => {
+                if (err || result.error) {
+                    reject(err || result.error);
+                } else {
+                    resolve(accessToken);
+                }
             }
-        });
+        );
     });
 }
