@@ -30,3 +30,15 @@ export function startOAuth({ consumer, serviceUrls, callbackUrl }: OAuthStartOpt
         response_type: 'code'
     });
 }
+
+export async function getToken(code: string) {
+    return new Promise((resolve, reject) => {
+        client.getOAuthAccessToken(code, (err, accessToken, _, result) => {
+            if (err || result.error) {
+                reject(err || result.error);
+            } else {
+                resolve(accessToken);
+            }
+        });
+    });
+}

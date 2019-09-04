@@ -11,7 +11,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@locale": [ "src/bot/locales/export" ],
+      "@locale": [ "src/locales/export" ],
       "@commands": [ "src/bot/commands/export" ],
       "@bot": [ "src/bot/main" ]
     }

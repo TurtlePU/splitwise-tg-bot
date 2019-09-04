@@ -36,7 +36,7 @@
     "typescript": "^3.6.2"
   },
   "_moduleAliases": {
-    "@locale": "build/bot/locales/export.js",
+    "@locale": "build/locales/export.js",
     "@commands": "build/bot/commands/export.js",
     "@bot": "build/bot/main.js"
   }

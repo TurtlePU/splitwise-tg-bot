@@ -25,19 +25,22 @@ const splitwiseOAuthOptions: OAuthStartOptions = Object.freeze({
     callbackUrl: callbackUrl(server.url)
 });
 
-const telegramToken = process.env.TG_TOKEN || 'none';
+const bot = Object.freeze({
+    token: process.env.TG_TOKEN || 'none',
+    name: process.env.BOT_NAME || 'none'
+});
 
 console.log('\n= SERVER CONSTANTS =\n', server);
 console.log('\n= SPLITWISE CONSTANTS =\n', splitwiseOAuthOptions);
-console.log('\n= TELEGRAM TOKEN =\n', telegramToken);
+console.log('\n= BOT CONSTANTS =\n', bot);
 
 (async function start() {
     startOAuth(splitwiseOAuthOptions);
     const botWebhook = await startBot({
         authLink: authorizeUrl(),
-        token: telegramToken, url: botUrl(server.url)
+        token: bot.token, url: botUrl(server.url)
     });
-    await startServer({ port: server.port, botWebhook });
+    await startServer({ port: server.port, botName: bot.name, botWebhook });
     console.log(`Listening!`);
 })();
 

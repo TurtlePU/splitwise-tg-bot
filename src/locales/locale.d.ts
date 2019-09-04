@@ -6,4 +6,7 @@ declare interface Locale {
     help: {
         text(): string;
     };
+    redirect: {
+        text(): string;
+    };
 }
