@@ -37,6 +37,7 @@
   },
   "_moduleAliases": {
     "@locale": "build/bot/locales/export.js",
-    "@commands": "build/bot/commands/export.js"
+    "@commands": "build/bot/commands/export.js",
+    "@bot": "build/bot/main.js"
   }
 }

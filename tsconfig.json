@@ -12,7 +12,8 @@
     "baseUrl": ".",
     "paths": {
       "@locale": [ "src/bot/locales/export" ],
-      "@commands": [ "src/bot/commands/export" ]
+      "@commands": [ "src/bot/commands/export" ],
+      "@bot": [ "src/bot/main" ]
     }
   }
 }

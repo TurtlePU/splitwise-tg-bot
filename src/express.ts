@@ -1,6 +1,11 @@
 import bodyParser from 'body-parser';
 import Express from 'express';
 
+export type StartOptions = {
+    port: number;
+    botWebhook: (req: Express.Request, res: Express.Response) => void;
+};
+
 export function callbackUrl(appUrl: string) {
     return `https://${appUrl}/clb`;
 };
@@ -9,12 +14,7 @@ export function botUrl(appUrl: string) {
     return `https://${appUrl}/bot`;
 };
 
-export type StartOptions = {
-    port: number;
-    botWebhook: (req: Express.Request, res: Express.Response) => void;
-};
-
-export default function start(options: StartOptions) {
+export function startServer(options: StartOptions) {
     const app = Express();
     app.use(bodyParser.json());
     app.post(`/bot`, options.botWebhook);
