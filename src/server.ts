@@ -30,9 +30,12 @@ const bot = Object.freeze({
     name: process.env.BOT_NAME || 'none'
 });
 
+const mongoUri = process.env.MONGODB_URI || 'none';
+
 console.log('\n= SERVER CONSTANTS =\n', server);
 console.log('\n= SPLITWISE CONSTANTS =\n', splitwiseOAuthOptions);
 console.log('\n= BOT CONSTANTS =\n', bot);
+console.log('\n= MONGO URI =\n', mongoUri);
 
 (async function start() {
     startOAuth(splitwiseOAuthOptions);
