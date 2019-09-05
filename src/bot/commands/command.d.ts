@@ -7,5 +7,5 @@ declare type Context = {
 
 declare type Command = {
     regexp: RegExp;
-    callback: (ctx: Context) => (msg: TelegramBot.Message) => void;
+    callback: (ctx: Context) => (msg: TelegramBot.Message, match: RegExpExecArray | null) => void;
 };

@@ -1,12 +1,11 @@
-import TelegramBot from 'node-telegram-bot-api';
-
 import Locale from '@locale';
 
 import { Command } from './command';
 
 const command: Command = {
     regexp: /\/start/,
-    callback: ({ bot, authLink }) => (msg: TelegramBot.Message) => {
+    callback: ({ bot, authLink }) => (msg, match) => {
+        console.log('Match: ', match);
         if (msg.from) {
             bot.sendMessage(
                 msg.chat.id,
