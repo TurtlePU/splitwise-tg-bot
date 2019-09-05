@@ -3,7 +3,7 @@ import Locale from '@locale';
 import { Command } from './command';
 
 const command: Command = {
-    regexp: /\/start/,
+    regexp: /\/start\b(?: (.*))?/,
     callback: ({ bot, authLink }) => (msg, match) => {
         console.log('Match: ', match);
         if (msg.from) {
