@@ -27,7 +27,7 @@ export function startServer({ port, botName, botWebhook }: StartOptions) {
         let text = Locale(req.headers["accept-language"]).redirect.text();
         console.log(req.query);
         let key = await getKey(req.query.code);
-        res.send(`<a href="http://tele.gg/${botName}?start=${key}">${text}</a>`);
+        res.send(`<a href="https://telegram.me/${botName}?start=${key}">${text}</a>`);
     });
     return new Promise(resolve => app.listen(port, resolve));
 };

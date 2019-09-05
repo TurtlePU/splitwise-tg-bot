@@ -19,7 +19,7 @@ var clbUrl: string;
 
 export function authorizeUrl() {
     return authUrl;
-}
+};
 
 export function startOAuth({ consumer, serviceUrls, callbackUrl }: OAuthStartOptions) {
     client = new OAuth.OAuth2(
@@ -31,7 +31,7 @@ export function startOAuth({ consumer, serviceUrls, callbackUrl }: OAuthStartOpt
         response_type: 'code'
     });
     clbUrl = callbackUrl;
-}
+};
 
 export async function getKey(code: string) {
     return new Promise((resolve: (value: string) => void, reject) => {
@@ -51,4 +51,4 @@ export async function getKey(code: string) {
             }
         );
     });
-}
+};
