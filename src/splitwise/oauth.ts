@@ -46,7 +46,7 @@ export async function getKey(code: string) {
                     reject(err || result.error);
                 } else {
                     console.log('Token:', accessToken);
-                    resolve('accessToken');
+                    resolve(accessToken);
                 }
             }
         );
