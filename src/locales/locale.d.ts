@@ -9,4 +9,7 @@ declare interface Locale {
     redirect: {
         text(): string;
     };
+    auth: {
+        text(authLink: string): string;
+    }
 }

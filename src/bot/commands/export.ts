@@ -1,10 +1,9 @@
-import start from './start';
-import help from './help';
 import { Command } from './command';
 
-const commands: Command[] = [
-    start,
-    help
-];
+import auth from './auth';
+import start from './start';
+import help from './help';
+
+const commands: Command[] = [ auth, start, help ];
 
 export default commands;

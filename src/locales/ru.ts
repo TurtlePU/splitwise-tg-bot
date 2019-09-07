@@ -1,7 +1,7 @@
 const locale: Locale = {
     name: 'ru',
     start: {
-        text: (name: string, authLink?: string) => {
+        text: (name, authLink) => {
             if (authLink) {
                 return `Привет, ${name}!\n` +
                     `Прежде чем начать работу, войди в Splitwise [по этой ссылке](${authLink}).`;
@@ -15,10 +15,14 @@ const locale: Locale = {
         text: () =>
             `Вот список моих команд:\n\n` +
             `/start — начало работы.\n` +
-            `/help — показать это сообщение.`
+            `/help — показать это сообщение.\n` +
+            `/auth - перезайти в Splitwise.`
     },
     redirect: {
         text: () => `Вернуться к боту`
+    },
+    auth: {
+        text: authLink => `Ссылка для входа в Splitwise: [тык](${authLink}).`
     }
 };
 
