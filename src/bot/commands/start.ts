@@ -1,7 +1,7 @@
 import Locale from '@locale';
 
 import { Command } from './command';
-import { saveUser } from '@storage';
+import { saveUser, hasUser } from '@storage';
 import { AssertionError } from 'assert';
 
 const command: Command = {
@@ -18,7 +18,7 @@ const command: Command = {
                 msg.chat.id,
                 Locale(msg.from.language_code).start.text(
                     msg.from.first_name,
-                    match[1] ? undefined : authLink
+                    await hasUser(msg.from.id) ? undefined : authLink
                 ),
                 { parse_mode: 'Markdown' }
             );

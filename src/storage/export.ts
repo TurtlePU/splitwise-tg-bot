@@ -2,9 +2,9 @@ import Mongoose from 'mongoose';
 import TelegramBot from 'node-telegram-bot-api';
 
 export interface IUser extends Mongoose.Document {
-    _id: Number,
-    name: String,
-    token: String
+    _id: number,
+    name: string,
+    token: string
 };
 
 const User = Mongoose.model<IUser>('User', new Mongoose.Schema({
@@ -32,9 +32,13 @@ export function startStorage(mongoUri: string) {
 
 export function saveUser(user: TelegramBot.User, token: string) {
     const doc = new User({ _id: user.id, name: getName(user), token });
-    if (User.exists((doc: IUser) => doc._id == user.id)) {
-        return doc.update(doc);
-    } else {
-        return doc.save();
-    }
+    return User.findByIdAndUpdate(doc._id, doc);
+}
+
+export function getUserById(id: number) {
+    return User.findById(id);
+}
+
+export async function hasUser(id: number) {
+    return (await User.findById(id)) != null;
 }
