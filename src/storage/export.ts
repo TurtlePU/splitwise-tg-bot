@@ -1,10 +1,25 @@
 import Mongoose from 'mongoose';
 import TelegramBot from 'node-telegram-bot-api';
 
-const User = Mongoose.model('User', new Mongoose.Schema({
+export interface IUser extends Mongoose.Document {
     _id: Number,
     name: String,
     token: String
+};
+
+const User = Mongoose.model<IUser>('User', new Mongoose.Schema({
+    _id: {
+        type: Number,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    token: {
+        type: String,
+        required: true
+    }
 }));
 
 function getName(user: TelegramBot.User) {
@@ -16,6 +31,10 @@ export function startStorage(mongoUri: string) {
 }
 
 export function saveUser(user: TelegramBot.User, token: string) {
-    const userModel = new User({ _id: user.id, name: getName(user), token });
-    return userModel.save();
+    const doc = new User({ _id: user.id, name: getName(user), token });
+    if (User.exists((doc: IUser) => doc._id == user.id)) {
+        return doc.update(doc);
+    } else {
+        return doc.save();
+    }
 }
