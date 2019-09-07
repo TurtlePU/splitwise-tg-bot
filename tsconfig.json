@@ -13,7 +13,8 @@
     "paths": {
       "@locale": [ "src/locales/export" ],
       "@commands": [ "src/bot/commands/export" ],
-      "@bot": [ "src/bot/main" ]
+      "@bot": [ "src/bot/main" ],
+      "@storage": [ "src/storage/export.ts" ]
     }
   }
 }
