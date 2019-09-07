@@ -11,5 +11,5 @@ declare interface Locale {
     };
     auth: {
         text(authLink: string): string;
-    }
+    };
 }
