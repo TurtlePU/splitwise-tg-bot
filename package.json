@@ -41,6 +41,7 @@
     "@locale": "build/locales/export.js",
     "@commands": "build/bot/commands/export.js",
     "@bot": "build/bot/main.js",
-    "@storage": "build/storage/export.js"
+    "@storage": "build/storage/export.js",
+    "@api": "build/splitwise/api.js"
   }
 }

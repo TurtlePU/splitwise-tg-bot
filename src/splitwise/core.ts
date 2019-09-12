@@ -15,16 +15,23 @@ export type OAuthStartOptions = {
 
 var client: OAuth.OAuth2;
 var authUrl: string;
+var baseUrl: string;
 var clbUrl: string;
+var version: string = '3.0';
 
 export function authorizeUrl() {
     return authUrl;
 };
 
+export function setApiVersion(apiVersion: string) {
+    version = apiVersion;
+};
+
 export function startOAuth({ consumer, serviceUrls, callbackUrl }: OAuthStartOptions) {
+    baseUrl = serviceUrls.base;
     client = new OAuth.OAuth2(
         consumer.key, consumer.secret,
-        serviceUrls.base, serviceUrls.auth, serviceUrls.token
+        baseUrl, serviceUrls.auth, serviceUrls.token
     );
     authUrl = client.getAuthorizeUrl({
         redirect_uri: callbackUrl,
@@ -33,10 +40,9 @@ export function startOAuth({ consumer, serviceUrls, callbackUrl }: OAuthStartOpt
     clbUrl = callbackUrl;
 };
 
-export async function getKey(code: string) {
-    return new Promise((resolve: (value: string) => void, reject) => {
-        client.getOAuthAccessToken(
-            code,
+export function getKey(code: string) {
+    return new Promise((resolve: (value: string) => void, reject: (reason: any) => void) => {
+        client.getOAuthAccessToken(code,
             {
                 redirect_uri: clbUrl,
                 grant_type: 'authorization_code'
@@ -50,5 +56,19 @@ export async function getKey(code: string) {
                 }
             }
         );
+    });
+};
+
+export function get(request: string, token: string) {
+    return new Promise((
+            resolve: (result?: string | Buffer) => void,
+            reject: (reason: { statusCode: number, data?: any }) => void) => {
+        client.get(`${baseUrl}/api/v${version}/${request}`, token, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(result);
+            }
+        });
     });
 };

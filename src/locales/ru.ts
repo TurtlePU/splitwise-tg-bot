@@ -16,7 +16,8 @@ const locale: Locale = {
             `Вот список моих команд:\n\n` +
             `/start — начало работы.\n` +
             `/help — показать это сообщение.\n` +
-            `/auth — перезайти в Splitwise.`
+            `/auth — перезайти в Splitwise.\n` +
+            `/stats — показать расходы.`
     },
     redirect: {
         text: () => `Вернуться к боту`

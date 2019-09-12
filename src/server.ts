@@ -6,7 +6,7 @@ import startBot from '@bot';
 import { startStorage } from '@storage';
 
 import { botUrl, callbackUrl, startServer } from './express';
-import { authorizeUrl, startOAuth, OAuthStartOptions } from './splitwise/oauth'
+import { authorizeUrl, startOAuth, OAuthStartOptions } from './splitwise/core'
 
 const server = Object.freeze({
     port: +(process.env.PORT || 8080),

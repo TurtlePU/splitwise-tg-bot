@@ -3,7 +3,7 @@ import Express from 'express';
 
 import Locale from '@locale';
 
-import { getKey } from './splitwise/oauth';
+import { getKey } from './splitwise/core';
 
 export type StartOptions = {
     port: number;
