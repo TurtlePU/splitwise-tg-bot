@@ -8,7 +8,8 @@ const command: Command = {
     callback: ({ bot }) => async msg => {
         if (msg.from && await hasUser(msg.from.id)) {
             const user = await getUserById(msg.from.id) as IUser;
-            bot.sendMessage(msg.chat.id, (await expenses(user.token)).toString());
+            console.log((await expenses(user.token)).toString());
+            bot.sendMessage(msg.chat.id, "ok");
         }
     }
 };
