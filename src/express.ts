@@ -1,7 +1,7 @@
 import bodyParser from 'body-parser';
 import Express from 'express';
 
-import Locale from '@locale';
+import { getLocaledUi as Locale } from '@locale';
 
 import { getKey } from './splitwise/core';
 
