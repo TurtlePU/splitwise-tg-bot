@@ -1,40 +1,31 @@
 import Mongoose from 'mongoose';
-import TelegramBot from 'node-telegram-bot-api';
 
-export interface IUser extends Mongoose.Document {
-    _id: number,
-    name: string,
-    token: string
-};
-
-const User = Mongoose.model<IUser>('User', new Mongoose.Schema({
-    _id: {
-        type: Number,
-        required: true
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    token: {
-        type: String,
-        required: true
-    }
-}));
-
-function getName(user: TelegramBot.User) {
-    return '@' + user.username || user.first_name + (' ' + user.last_name || '');
-}
+export { IUser, Id } from './user';
+import { IUser, User, IdModel, Id } from './user';
 
 export function startStorage(mongoUri: string) {
     return Mongoose.connect(mongoUri);
-}
+};
 
-export function saveUser(user: TelegramBot.User, token: string) {
-    const doc = new User({ _id: user.id, name: getName(user), token });
-    return User.findByIdAndUpdate(doc._id, doc);
-}
+export async function saveUser(user: IUser) {
+    await Promise.all([
+        IdModel.deleteOne({ tgId: user._id.tg }),
+        IdModel.deleteOne({ swId: user._id.sw })
+    ]);
+    await Promise.all([
+        User.findByIdAndUpdate(user._id, new User(user), { upsert: true }),
+        new IdModel(user._id).save()
+    ]);
+};
 
-export function getUserById(id: number) {
+export async function getUserById(id: Partial<Id>) {
+    if (!id.sw && !id.tg) {
+        return null;
+    }
+    const doc = await IdModel.findOne(id);
+    if (!doc) {
+        return null;
+    }
+    id = { sw: doc.sw, tg: doc.sw };
     return User.findById(id);
-}
+};

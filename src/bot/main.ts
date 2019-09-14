@@ -23,7 +23,7 @@ export default async function start(options: StartOptions) {
 
     commands.forEach(({ regexp, callback }) => {
         bot.onText(regexp, (msg, match) => {
-            callback({ bot, ...options })({
+            callback(bot)({
                 msg, match, locale: Locale(msg.from && msg.from.language_code)
             });
         });

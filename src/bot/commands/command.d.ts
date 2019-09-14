@@ -1,10 +1,5 @@
 import TelegramBot from 'node-telegram-bot-api';
 
-declare type Context = {
-    bot: TelegramBot;
-    authLink: string;
-};
-
 declare type Message = {
     msg: TelegramBot.Message,
     match: RegExpExecArray | null,
@@ -13,5 +8,5 @@ declare type Message = {
 
 declare type Command = {
     regexp: RegExp;
-    callback: (ctx: Context) => (msg: Message) => void;
+    callback: (bot: TelegramBot) => (msg: Message) => void;
 };

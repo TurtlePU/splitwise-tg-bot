@@ -1,29 +1,44 @@
 import { AssertionError } from 'assert';
+import TelegramBot from 'node-telegram-bot-api';
 
-import { saveUser, getUserById } from '@storage';
+import { me } from '@api';
+import { saveUser, getUserById, Id } from '@storage';
 
 import { Command } from './command';
 
 const command: Command = {
     regexp: /\/start\b(?: (.*))?/,
-    callback: ({ bot, authLink }) => async ({ msg, match, locale }) => {
+    callback: bot => async ({ msg, match, locale }) => {
         if (!match) {
             throw new AssertionError({ message: "Can't parse tokens" });
         }
+        let message: string;
         if (msg.from) {
             if (match[1]) {
-                await saveUser(msg.from, match[1]);
-            }
-            bot.sendMessage(msg.chat.id,
-                locale.start.text(
+                const swToken = match[1];
+                await Promise.all([
+                    bot.sendMessage(msg.chat.id, locale.onToken),
+                    saveUser({
+                        _id: new Id(msg.from.id, (await me(swToken)).id),
+                        name: getName(msg.from), swToken
+                    })
+                ]);
+                message = locale.onTokenSaved;
+            } else {
+                message = locale.start(
                     msg.from.first_name,
-                    await getUserById(msg.from.id) ? undefined : authLink
-                )
-            );
+                    !!await getUserById({ tg: msg.from.id })
+                );
+            }
         } else {
-            bot.sendMessage(msg.chat.id, locale.anon.text());
+            message = locale.anon;
         }
+        bot.sendMessage(msg.chat.id, message);
     }
 };
 
 export default command;
+
+function getName({ username, first_name, last_name }: TelegramBot.User) {
+    return username ? `@${username}` : `${first_name}${last_name ? ` ${last_name}` : ''}`;
+}

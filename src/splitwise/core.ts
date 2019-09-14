@@ -61,13 +61,13 @@ export function getKey(code: string) {
 
 export function get(request: string, token: string) {
     return new Promise((
-            resolve: (result?: string | Buffer) => void,
+            resolve: (result: any) => void,
             reject: (reason: { statusCode: number, data?: any }) => void) => {
         client.get(`${baseUrl}/api/v${version}/${request}`, token, (err, result) => {
-            if (err) {
-                reject(err);
+            if (err || !result) {
+                reject(err || new Error('result is null'));
             } else {
-                resolve(result);
+                resolve(JSON.parse(result as string));
             }
         });
     });

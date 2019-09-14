@@ -1,36 +1,42 @@
-const locale: Locale = {
-    name: 'ru',
-    start: {
-        text: (name, authLink) => {
-            if (authLink) {
-                return `Привет, ${name}!\n` +
-                    `Прежде чем начать работу, войди в Splitwise [по этой ссылке](${authLink}).`;
-            } else {
-                return `Снова привет, ${name}!\n` +
-                    `Ты уже вошёл в Splitwise. Чтобы узнать, как мной управлять, введи /help.`;
-            }
-        }
-    },
-    help: {
-        text: () =>
-            `Вот список моих команд:\n\n` +
-            `/start — начало работы.\n` +
-            `/help — показать это сообщение.\n` +
-            `/auth — перезайти в Splitwise.\n` +
-            `/stats — показать расходы.`
-    },
-    redirect: {
-        text: () => `Вернуться к боту`
-    },
-    auth: {
-        text: authLink => `Ссылка для входа в Splitwise: [тык](${authLink}).`
-    },
-    noauth: {
-        text: authLink => `Прежде чем управлять мной, войди в Splitwise: [тык](${authLink}).`
-    },
-    anon: {
-        text: () => `Прости, но я не знаю, кто ты.`
-    }
-};
+let link: string;
+
+const locale: Locale = Object.freeze({
+    localeName: 'ru',
+    useAuthLink: (authLink) => link = authLink,
+
+    start: (name, authed) => authed
+        ?
+`Снова привет, ${name}!
+Ты уже вошёл в Splitwise. Чтобы узнать, как мной управлять, введи /help.`
+        :
+`Привет, ${name}!
+Прежде чем начать работу, войди в Splitwise [по этой ссылке](${link}).`,
+
+    help:
+`Вот список моих команд:
+
+/start — начало работы.
+/help — показать это сообщение.
+/auth — перезайти в Splitwise.
+/stats — показать расходы.`,
+
+    redirect:
+`Вернуться к боту`,
+
+    auth: () =>
+`Ссылка для входа в Splitwise: [тык](${link}).`,
+
+    noAuth: () =>
+`Сначала войди в Splitwise: [тык](${link}).`,
+
+    anon:
+`Прости, но я не знаю, кто ты.`,
+
+    onToken:
+`Обрабатываем токен...`,
+
+    onTokenSaved:
+`Токен сохранён. Список команд доступен через /help.`
+});
 
 export default locale;
