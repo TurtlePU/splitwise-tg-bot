@@ -3,6 +3,7 @@ import 'module-alias/register';
 import http from 'http';
 
 import startBot from '@bot';
+import { useAuthLink } from '@locale';
 import { startStorage } from '@storage';
 
 import { botUrl, callbackUrl, startServer } from './express';
@@ -40,9 +41,9 @@ console.log('\n= MONGO URI =\n', mongoUri);
 
 (async function start() {
     startOAuth(splitwiseOAuthOptions);
+    useAuthLink(authorizeUrl());
     await startStorage(mongoUri);
     const botWebhook = await startBot({
-        authLink: authorizeUrl(),
         token: bot.token, url: botUrl(server.url)
     });
     await startServer({ port: server.port, botName: bot.name, botWebhook });
