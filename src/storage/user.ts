@@ -1,13 +1,8 @@
 import Mongoose from 'mongoose';
 
-export class Id {
-    readonly tg: number;
-    readonly sw: number;
-
-    constructor(tg: number, sw: number) {
-        this.tg = tg;
-        this.sw = sw;
-    }
+export type Id = {
+    tg: number,
+    sw: number
 };
 
 export type IdDoc = Mongoose.Document & Id;
@@ -26,7 +21,7 @@ export type IUser = {
 export type UserDoc = Mongoose.Document & IUser;
 
 export const User = Mongoose.model<UserDoc>('User', new Mongoose.Schema({
-    _id: { type: Id, required: true },
+    _id: { type: { tg: Number, sw: Number }, required: true },
     name: { type: String, required: true },
     swToken: { type: String, required: true }
 }));

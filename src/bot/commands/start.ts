@@ -19,7 +19,7 @@ const command: Command = {
                 await Promise.all([
                     bot.sendMessage(msg.chat.id, locale.onToken),
                     saveUser({
-                        _id: new Id(msg.from.id, (await me(swToken)).id),
+                        _id: { tg: msg.from.id, sw: (await me(swToken)).id },
                         name: getName(msg.from), swToken
                     })
                 ]);
