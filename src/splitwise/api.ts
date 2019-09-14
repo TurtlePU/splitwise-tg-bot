@@ -1,5 +1,5 @@
 import { get } from './core';
 
-export function expenses(token: string) {
-    return get('get_expenses', token);
+export function friends(token: string) {
+    return get('get_friends', token);
 }

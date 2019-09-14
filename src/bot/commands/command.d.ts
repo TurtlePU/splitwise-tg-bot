@@ -5,7 +5,13 @@ declare type Context = {
     authLink: string;
 };
 
+declare type Message = {
+    msg: TelegramBot.Message,
+    match: RegExpExecArray | null,
+    locale: Locale
+};
+
 declare type Command = {
     regexp: RegExp;
-    callback: (ctx: Context) => (msg: TelegramBot.Message, match: RegExpExecArray | null) => void;
+    callback: (ctx: Context) => (msg: Message) => void;
 };

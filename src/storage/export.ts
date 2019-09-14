@@ -38,7 +38,3 @@ export function saveUser(user: TelegramBot.User, token: string) {
 export function getUserById(id: number) {
     return User.findById(id);
 }
-
-export async function hasUser(id: number) {
-    return (await User.findById(id)) != null;
-}

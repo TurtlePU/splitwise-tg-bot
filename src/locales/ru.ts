@@ -24,6 +24,12 @@ const locale: Locale = {
     },
     auth: {
         text: authLink => `Ссылка для входа в Splitwise: [тык](${authLink}).`
+    },
+    noauth: {
+        text: authLink => `Прежде чем управлять мной, войди в Splitwise: [тык](${authLink}).`
+    },
+    anon: {
+        text: () => `Прости, но я не знаю, кто ты.`
     }
 };
 

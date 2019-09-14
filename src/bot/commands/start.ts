@@ -1,12 +1,12 @@
-import Locale from '@locale';
+import { AssertionError } from 'assert';
+
+import { saveUser, getUserById } from '@storage';
 
 import { Command } from './command';
-import { saveUser, hasUser } from '@storage';
-import { AssertionError } from 'assert';
 
 const command: Command = {
     regexp: /\/start\b(?: (.*))?/,
-    callback: ({ bot, authLink }) => async (msg, match) => {
+    callback: ({ bot, authLink }) => async ({ msg, match, locale }) => {
         if (!match) {
             throw new AssertionError({ message: "Can't parse tokens" });
         }
@@ -14,14 +14,14 @@ const command: Command = {
             if (match[1]) {
                 await saveUser(msg.from, match[1]);
             }
-            bot.sendMessage(
-                msg.chat.id,
-                Locale(msg.from.language_code).start.text(
+            bot.sendMessage(msg.chat.id,
+                locale.start.text(
                     msg.from.first_name,
-                    await hasUser(msg.from.id) ? undefined : authLink
-                ),
-                { parse_mode: 'Markdown' }
+                    await getUserById(msg.from.id) ? undefined : authLink
+                )
             );
+        } else {
+            bot.sendMessage(msg.chat.id, locale.anon.text());
         }
     }
 };

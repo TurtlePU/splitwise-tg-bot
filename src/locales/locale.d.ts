@@ -12,4 +12,10 @@ declare interface Locale {
     auth: {
         text(authLink: string): string;
     };
+    noauth: {
+        text(authLink: string): string;
+    };
+    anon: {
+        text(): string;
+    };
 }
