@@ -16,6 +16,7 @@ const command: Command = {
         if (msg.from) {
             if (match[1]) {
                 const swToken = match[1];
+                console.log(await me(swToken));
                 await Promise.all([
                     bot.sendMessage(msg.chat.id, locale.onToken),
                     saveUser({
