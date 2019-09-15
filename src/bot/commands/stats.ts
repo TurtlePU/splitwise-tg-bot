@@ -10,7 +10,6 @@ const command: Command = {
         if (msg.from) {
             const user = await getUserById({ tg: msg.from.id });
             if (user) {
-                console.log(await friends(user.swToken));
                 message = locale.stats(
                     await Promise.all(
                         (await friends(user.swToken))

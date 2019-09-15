@@ -25,7 +25,6 @@ export function startServer({ port, botName, botWebhook }: StartOptions) {
     app.post(`/bot/`, botWebhook);
     app.get(`/clb/`, async (req, res) => {
         let text = Locale(req.headers["accept-language"]).redirect;
-        console.log(req.query);
         let key = await retrieveToken(req.query.code);
         res.send(`<a href="https://tele.gg/${botName}?start=${key}">${text}</a>`);
     });

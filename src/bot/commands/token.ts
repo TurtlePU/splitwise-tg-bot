@@ -9,7 +9,6 @@ import { Command } from './command';
 const command: Command = {
     regexp: /^\/start (.*)$/,
     callback: bot => async ({ msg, match, locale }) => {
-        console.log('kok');
         let message: string;
         if (msg.from) {
             const token = (match as RegExpExecArray)[1];
