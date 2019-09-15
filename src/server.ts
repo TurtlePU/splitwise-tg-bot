@@ -6,7 +6,7 @@ import startBot from '@bot';
 import { useAuthLink } from '@locale';
 import { startStorage } from '@storage';
 
-import { botUrl, callbackUrl, startServer } from './express';
+import { botUrl, callbackUrl, startServer } from './static';
 import { authorizeUrl, startOAuth, OAuthStartOptions } from './splitwise/core'
 
 const server = Object.freeze({

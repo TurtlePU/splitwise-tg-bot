@@ -9,13 +9,14 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@locale": [ "src/locales/export" ],
-      "@commands": [ "src/bot/commands/export" ],
-      "@bot": [ "src/bot/main" ],
-      "@storage": [ "src/storage/export.ts" ],
-      "@api": [ "src/splitwise/api.ts" ]
+      "@locale": [ "locales/export" ],
+      "@commands": [ "bot/commands/export" ],
+      "@bot": [ "bot/main" ],
+      "@storage": [ "storage/export.ts" ],
+      "@api": [ "splitwise/api.ts" ],
+      "@token": [ "splitwise/core.ts" ]
     }
   }
 }

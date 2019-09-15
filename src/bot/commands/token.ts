@@ -2,9 +2,9 @@ import { User } from 'node-telegram-bot-api';
 
 import { me } from '@api';
 import { saveUser, getUserById } from '@storage';
+import { redeemToken } from '@token';
 
 import { Command } from './command';
-import { redeemToken } from 'src/splitwise/core';
 
 const command: Command = {
     regexp: /^\/start (.*)$/,
