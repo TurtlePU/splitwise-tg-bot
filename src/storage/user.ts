@@ -13,7 +13,7 @@ export const IdModel = Mongoose.model<IdDoc>('UserMap', new Mongoose.Schema({
 }));
 
 export type IUser = {
-    _id: Id;
+    _id: number;
     name: string;
     swToken: string;
 };
@@ -21,7 +21,7 @@ export type IUser = {
 export type UserDoc = Mongoose.Document & IUser;
 
 export const User = Mongoose.model<UserDoc>('User', new Mongoose.Schema({
-    _id: { type: { tg: Number, sw: Number }, required: true },
+    _id: { type: Number, required: true },
     name: { type: String, required: true },
     swToken: { type: String, required: true }
 }));

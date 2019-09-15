@@ -7,14 +7,14 @@ export function startStorage(mongoUri: string) {
     return Mongoose.connect(mongoUri);
 };
 
-export async function saveUser(user: IUser) {
+export async function saveUser(user: IUser, splitwiseId: number) {
     await Promise.all([
-        IdModel.deleteOne({ tg: user._id.tg }),
-        IdModel.deleteOne({ sw: user._id.sw })
+        IdModel.deleteOne({ tg: user._id }),
+        IdModel.deleteOne({ sw: splitwiseId })
     ]);
     await Promise.all([
-        User.findByIdAndUpdate(user._id, new User(user), { upsert: true }),
-        new IdModel(user._id).save()
+        new User(user).save(),
+        new IdModel({ tg: user._id, sw: splitwiseId }).save()
     ]);
 };
 
@@ -22,11 +22,12 @@ export async function getUserById(id: Partial<Id>) {
     if (!id.sw && !id.tg) {
         return null;
     }
+    if (id.tg) {
+        return User.findById(id.tg);
+    }
     const doc = await IdModel.findOne(id);
-    console.log(doc);
     if (!doc) {
         return null;
     }
-    id = { sw: doc.sw, tg: doc.sw };
-    return User.findById(id);
+    return User.findById(doc.tg);
 };

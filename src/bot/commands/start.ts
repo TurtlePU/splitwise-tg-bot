@@ -16,13 +16,12 @@ const command: Command = {
         if (msg.from) {
             if (match[1]) {
                 const swToken = match[1];
-                console.log(await me(swToken));
                 await Promise.all([
                     bot.sendMessage(msg.chat.id, locale.onToken),
-                    saveUser({
-                        _id: { tg: msg.from.id, sw: (await me(swToken)).id },
-                        name: getName(msg.from), swToken
-                    })
+                    saveUser(
+                        { _id: msg.from.id, name: getName(msg.from), swToken },
+                        (await me(swToken)).id
+                    )
                 ]);
                 message = locale.onTokenSaved;
             } else {
