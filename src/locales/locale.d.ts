@@ -9,4 +9,10 @@ declare interface Locale {
     anon: string;
     onToken: string;
     onTokenSaved: string;
+    stats(friends: Friend[]): string;
 }
+
+declare type Friend = {
+    name: string;
+    balance: Debt[];
+};

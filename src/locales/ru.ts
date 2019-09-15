@@ -36,7 +36,20 @@ const locale: Locale = Object.freeze({
 `Обрабатываем токен...`,
 
     onTokenSaved:
-`Токен сохранён. Список команд доступен через /help.`
+`Токен сохранён. Список команд доступен через /help.`,
+
+    stats: (friends: Friend[]) => {
+        if (friends.length) {
+            return friends
+                .map(friend => {
+                    return friend.balance
+                        .map(debt =>
+                            `${debt.amount > 0 ? '+' : ''}${debt.amount} ${debt.currency_code}`)
+                        .reduce((acc, curr) => `${acc}\n\t${curr}`, `${friend.name}:`)
+                })
+                .reduce((acc, curr) => `${acc}\n\n${curr}`, `С кем вы связаны:`);
+        } else return `Долгов нет.`;
+    }
 });
 
 export default locale;
