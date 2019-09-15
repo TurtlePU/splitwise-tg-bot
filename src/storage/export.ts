@@ -9,8 +9,8 @@ export function startStorage(mongoUri: string) {
 
 export async function saveUser(user: IUser) {
     await Promise.all([
-        IdModel.deleteOne({ tgId: user._id.tg }),
-        IdModel.deleteOne({ swId: user._id.sw })
+        IdModel.deleteOne({ tg: user._id.tg }),
+        IdModel.deleteOne({ sw: user._id.sw })
     ]);
     await Promise.all([
         User.findByIdAndUpdate(user._id, new User(user), { upsert: true }),
