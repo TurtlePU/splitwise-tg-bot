@@ -1,6 +1,6 @@
 import Mongoose from 'mongoose';
 
-import { UserModel, IdModel, IUser, IId } from './user';
+import { UserModel, IdModel, UserDocument, IdDocument } from './user';
 
 export type Id = {
     sw: number,
@@ -19,8 +19,8 @@ export function startStorage(mongoUri: string) {
 
 export function saveUser(user: User) {
     return Promise.all([
-        new UserModel(makeIUser(user)).save(),
-        new IdModel(makeIId(user.id)).save()
+        createUserDocument(user).save(),
+        createIdDocument(user.id).save()
     ]);
 };
 
@@ -32,17 +32,21 @@ export async function getUserById({ sw, tg }: Partial<Id>) {
     return id && UserModel.findById(id.tg);
 };
 
-function makeIUser(user: User): IUser {
-    return {
+function createUserDocument(user: User): UserDocument {
+    const doc = new UserModel({
         _id: user.id.tg,
         name: user.name,
         swToken: user.token
-    };
+    });
+    doc.isNew = false;
+    return doc;
 };
 
-function makeIId(id: Id): IId {
-    return {
+function createIdDocument(id: Id): IdDocument {
+    const doc = new IdModel({
         _id: id.sw,
         tg: id.tg
-    };
+    });
+    doc.isNew = false;
+    return doc;
 };

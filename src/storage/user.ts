@@ -1,26 +1,26 @@
 import Mongoose from 'mongoose';
 
-export type IId = {
+type Id = {
     _id: number,
     tg: number
 };
 
-type IdDoc = Mongoose.Document & IId;
+export type IdDocument = Mongoose.Document & Id;
 
-export const IdModel = Mongoose.model<IdDoc>('ID', new Mongoose.Schema({
+export const IdModel = Mongoose.model<IdDocument>('ID', new Mongoose.Schema({
     _id: { type: Number, required: true },
     tg: { type: Number, required: true }
 }));
 
-export type IUser = {
+export type User = {
     _id: number;
     name: string;
     swToken: string;
 };
 
-type UserDoc = Mongoose.Document & IUser;
+export type UserDocument = Mongoose.Document & User;
 
-export const UserModel = Mongoose.model<UserDoc>('User', new Mongoose.Schema({
+export const UserModel = Mongoose.model<UserDocument>('User', new Mongoose.Schema({
     _id: { type: Number, required: true },
     name: { type: String, required: true },
     swToken: { type: String, required: true }
