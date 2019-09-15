@@ -3,7 +3,7 @@ import Express from 'express';
 
 import { getLocaledUi as Locale } from '@locale';
 
-import { getKey } from './splitwise/core';
+import { retrieveToken } from './splitwise/core';
 
 export type StartOptions = {
     port: number;
@@ -26,7 +26,7 @@ export function startServer({ port, botName, botWebhook }: StartOptions) {
     app.get(`/clb/`, async (req, res) => {
         let text = Locale(req.headers["accept-language"]).redirect;
         console.log(req.query);
-        let key = await getKey(req.query.code);
+        let key = await retrieveToken(req.query.code);
         res.send(`<a href="https://tele.gg/${botName}?start=${key}">${text}</a>`);
     });
     return new Promise(resolve => app.listen(port, resolve));

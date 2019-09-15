@@ -1,15 +1,15 @@
 import Mongoose from 'mongoose';
 
-export type Id = {
-    tg: number,
-    sw: number
+export type IId = {
+    _id: number,
+    tg: number
 };
 
-export type IdDoc = Mongoose.Document & Id;
+type IdDoc = Mongoose.Document & IId;
 
-export const IdModel = Mongoose.model<IdDoc>('UserMap', new Mongoose.Schema({
-    tg: { type: Number, required: true },
-    sw: { type: Number, required: true }
+export const IdModel = Mongoose.model<IdDoc>('ID', new Mongoose.Schema({
+    _id: { type: Number, required: true },
+    tg: { type: Number, required: true }
 }));
 
 export type IUser = {
@@ -18,9 +18,9 @@ export type IUser = {
     swToken: string;
 };
 
-export type UserDoc = Mongoose.Document & IUser;
+type UserDoc = Mongoose.Document & IUser;
 
-export const User = Mongoose.model<UserDoc>('User', new Mongoose.Schema({
+export const UserModel = Mongoose.model<UserDoc>('User', new Mongoose.Schema({
     _id: { type: Number, required: true },
     name: { type: String, required: true },
     swToken: { type: String, required: true }

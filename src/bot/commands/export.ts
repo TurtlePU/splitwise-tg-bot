@@ -1,10 +1,11 @@
 import { Command } from './command';
 
-import auth from './auth';
-import start from './start';
-import help from './help';
-import stats from './stats';
-
-const commands: Command[] = [ auth, start, help, stats ];
+const commands: Command[] = [
+    require('./auth'),
+    require('./help'),
+    require('./start'),
+    require('./stats'),
+    require('./token')
+];
 
 export default commands;

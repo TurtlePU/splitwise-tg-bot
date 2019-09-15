@@ -4,7 +4,7 @@ import { getUserById } from '@storage';
 import { Command } from './command';
 
 const command: Command = {
-    regexp: /\/stats/,
+    regexp: /^\/stats$/,
     callback: bot => async ({ msg, locale }) => {
         let message: string;
         if (msg.from) {

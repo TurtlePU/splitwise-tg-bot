@@ -1,7 +1,7 @@
 import { Command } from './command';
 
 const command: Command = {
-    regexp: /\/help/,
+    regexp: /^\/help$/,
     callback: bot => ({ msg, locale }) => {
         bot.sendMessage(msg.chat.id, locale.help);
     }

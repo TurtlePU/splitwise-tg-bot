@@ -40,7 +40,9 @@ export function startOAuth({ consumer, serviceUrls, callbackUrl }: OAuthStartOpt
     clbUrl = callbackUrl;
 };
 
-export function getKey(code: string) {
+const tokens = new Set<string>();
+
+export function retrieveToken(code: string) {
     return new Promise((resolve: (value: string) => void, reject: (reason: any) => void) => {
         client.getOAuthAccessToken(code,
             {
@@ -51,12 +53,16 @@ export function getKey(code: string) {
                 if (err || result.error) {
                     reject(err || result.error);
                 } else {
-                    console.log('Token:', accessToken);
+                    tokens.add(accessToken);
                     resolve(accessToken);
                 }
             }
         );
     });
+};
+
+export function redeemToken(token: string) {
+    return tokens.delete(token);
 };
 
 export function get(request: string, token: string) {

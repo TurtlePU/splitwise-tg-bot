@@ -1,33 +1,48 @@
 import Mongoose from 'mongoose';
 
-export { IUser, Id } from './user';
-import { IUser, User, IdModel, Id } from './user';
+import { UserModel, IdModel, IUser, IId } from './user';
+
+export type Id = {
+    sw: number,
+    tg: number
+};
+
+export type User = {
+    id: Id,
+    name: string,
+    token: string
+};
 
 export function startStorage(mongoUri: string) {
     return Mongoose.connect(mongoUri);
 };
 
-export async function saveUser(user: IUser, splitwiseId: number) {
-    await Promise.all([
-        IdModel.deleteOne({ tg: user._id }),
-        IdModel.deleteOne({ sw: splitwiseId })
-    ]);
-    await Promise.all([
-        new User(user).save(),
-        new IdModel({ tg: user._id, sw: splitwiseId }).save()
+export function saveUser(user: User) {
+    return Promise.all([
+        new UserModel(makeIUser(user)).save(),
+        new IdModel(makeIId(user.id)).save()
     ]);
 };
 
-export async function getUserById(id: Partial<Id>) {
-    if (!id.sw && !id.tg) {
-        return null;
+export async function getUserById({ sw, tg }: Partial<Id>) {
+    if (tg) {
+        return UserModel.findById(tg);
     }
-    if (id.tg) {
-        return User.findById(id.tg);
-    }
-    const doc = await IdModel.findOne(id);
-    if (!doc) {
-        return null;
-    }
-    return User.findById(doc.tg);
+    const id = await IdModel.findById(sw);
+    return id && UserModel.findById(id.tg);
+};
+
+function makeIUser(user: User): IUser {
+    return {
+        _id: user.id.tg,
+        name: user.name,
+        swToken: user.token
+    };
+};
+
+function makeIId(id: Id): IId {
+    return {
+        _id: id.sw,
+        tg: id.tg
+    };
 };
