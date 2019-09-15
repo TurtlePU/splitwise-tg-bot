@@ -1,11 +1,11 @@
 import { Command } from './command';
 
 const commands: Command[] = [
-    require('./auth'),
-    require('./help'),
-    require('./start'),
-    require('./stats'),
-    require('./token')
+    require('./auth').default,
+    require('./help').default,
+    require('./start').default,
+    require('./stats').default,
+    require('./token').default
 ];
 
 export default commands;
