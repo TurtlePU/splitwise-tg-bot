@@ -12,6 +12,7 @@ export type Friend = User & {
 
 export async function friends(token: string): Promise<Friend[]> {
     const friends: Friend[] = (await get('get_friends', token)).friends;
+    console.log(friends);
     return friends.map(fix_empty_balances);
 };
 
@@ -20,6 +21,6 @@ export async function me(token: string): Promise<User> {
 };
 
 function fix_empty_balances(friend: Friend): Friend {
-    const balance = friend.balance.filter(debt => debt.amount);
+    const balance = friend.balance.filter(debt => debt.amount != 0.0);
     return { ...friend, balance };
 }
