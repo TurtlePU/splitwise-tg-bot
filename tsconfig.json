@@ -16,7 +16,8 @@
       "@bot": [ "bot/main" ],
       "@storage": [ "storage/export.ts" ],
       "@api": [ "splitwise/api.ts" ],
-      "@token": [ "splitwise/core.ts" ]
+      "@token": [ "splitwise/core.ts" ],
+      "@util": [ "util.ts" ]
     }
   }
 }

@@ -2,6 +2,7 @@ import { friends, User } from '@api';
 import { getUserById } from '@storage';
 
 import { Command } from './command';
+import { getName } from '@util';
 
 const command: Command = {
     regexp: /^\/stats$/,
@@ -15,7 +16,7 @@ const command: Command = {
                         (await friends(user.swToken))
                             .filter(friend => friend.balance.length)
                             .map(async friend => ({
-                                name: await getName(friend),
+                                name: await getNameAsync(friend),
                                 balance: friend.balance
                             }))
                     )
@@ -32,11 +33,11 @@ const command: Command = {
 
 export default command;
 
-async function getName(user: User): Promise<string> {
+async function getNameAsync(user: User): Promise<string> {
     const savedUser = await getUserById({ sw: user.id });
     if (savedUser) {
         return `tg: ${savedUser.name}`;
     } else {
-        return user.first_name + (user.last_name ? ` ${user.last_name}` : '');
+        return getName(user);
     }
 }

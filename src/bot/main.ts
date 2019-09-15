@@ -3,6 +3,8 @@ import Bot from 'node-telegram-bot-api';
 
 import commands from '@commands';
 import { getLocaledUi } from '@locale';
+import { updateUserName } from '@storage';
+import { getName } from '@util';
 
 export interface StartOptions {
     token: string;
@@ -19,7 +21,10 @@ export default async function start({ token, url }: StartOptions) {
     };
 
     commands.forEach(({ regexp, callback }) => {
-        bot.onText(regexp, (msg, match) => {
+        bot.onText(regexp, async (msg, match) => {
+            if (msg.from) {
+                await updateUserName(msg.from.id, getName(msg.from))
+            }
             callback(bot)({
                 msg, match, locale: getLocaledUi(msg.from && msg.from.language_code)
             });

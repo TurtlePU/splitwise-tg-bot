@@ -32,6 +32,14 @@ export async function getUserById({ sw, tg }: Partial<Id>) {
     return id && UserModel.findById(id.tg);
 };
 
+export async function updateUserName(id: number, name: string) {
+    const user = await UserModel.findById(id);
+    if (user) {
+        user.name = name;
+        user.save();
+    }
+}
+
 function createUserDocument(user: User): UserDocument {
     const doc = new UserModel({
         _id: user.id.tg,

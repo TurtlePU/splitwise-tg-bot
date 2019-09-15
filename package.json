@@ -43,6 +43,7 @@
     "@bot": "build/bot/main.js",
     "@storage": "build/storage/export.js",
     "@api": "build/splitwise/api.js",
-    "@token": "build/splitwise/core.js"
+    "@token": "build/splitwise/core.js",
+    "@util": "build/util.js"
   }
 }

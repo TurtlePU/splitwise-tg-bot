@@ -1,8 +1,7 @@
-import { User } from 'node-telegram-bot-api';
-
 import { me } from '@api';
 import { saveUser, getUserById } from '@storage';
 import { redeemToken } from '@token';
+import { getName } from '@util';
 
 import { Command } from './command';
 
@@ -35,7 +34,3 @@ const command: Command = {
 };
 
 export default command;
-
-function getName({ username, first_name, last_name }: User) {
-    return username ? `@${username}` : `${first_name}${last_name ? ` ${last_name}` : ''}`;
-}
