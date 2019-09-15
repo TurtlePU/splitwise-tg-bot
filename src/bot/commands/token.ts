@@ -7,7 +7,7 @@ import { redeemToken } from '@token';
 import { Command } from './command';
 
 const command: Command = {
-    regexp: /^\/start\b(.*)$/,
+    regexp: /^\/start (.*)$/,
     callback: bot => async ({ msg, match, locale }) => {
         console.log('kok');
         let message: string;
