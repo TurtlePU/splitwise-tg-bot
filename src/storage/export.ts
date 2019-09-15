@@ -17,10 +17,10 @@ export function startStorage(mongoUri: string) {
     return Mongoose.connect(mongoUri);
 };
 
-export function saveUser(user: User) {
+export async function saveUser(user: User) {
     return Promise.all([
-        createUserDocument(user).save(),
-        createIdDocument(user.id).save()
+        (await createUserDocument(user)).save(),
+        (await createIdDocument(user.id)).save()
     ]);
 };
 
@@ -40,21 +40,21 @@ export async function updateUserName(id: number, name: string) {
     }
 }
 
-function createUserDocument(user: User): UserDocument {
+async function createUserDocument(user: User): Promise<UserDocument> {
     const doc = new UserModel({
         _id: user.id.tg,
         name: user.name,
         swToken: user.token
     });
-    doc.isNew = false;
+    doc.isNew = !await UserModel.findById(doc.id);
     return doc;
 };
 
-function createIdDocument(id: Id): IdDocument {
+async function createIdDocument(id: Id): Promise<IdDocument> {
     const doc = new IdModel({
         _id: id.sw,
         tg: id.tg
     });
-    doc.isNew = false;
+    doc.isNew = !await IdModel.findById(doc.id);
     return doc;
 };
