@@ -23,6 +23,7 @@ export async function getUserById(id: Partial<Id>) {
         return null;
     }
     const doc = await IdModel.findOne(id);
+    console.log(doc);
     if (!doc) {
         return null;
     }
