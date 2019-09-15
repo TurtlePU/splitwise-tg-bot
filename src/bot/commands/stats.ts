@@ -12,10 +12,14 @@ const command: Command = {
             if (user) {
                 console.log(await friends(user.swToken));
                 message = locale.stats(
-                    await Promise.all((await friends(user.swToken)).map(async friend => ({
-                        name: await getName(friend),
-                        balance: friend.balance
-                    })))
+                    await Promise.all(
+                        (await friends(user.swToken))
+                            .filter(friend => friend.balance.length)
+                            .map(async friend => ({
+                                name: await getName(friend),
+                                balance: friend.balance
+                            }))
+                    )
                 );
             } else {
                 message = locale.noAuth();
