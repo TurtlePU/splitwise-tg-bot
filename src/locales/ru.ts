@@ -1,6 +1,6 @@
 let link: string;
 
-const locale: Locale = Object.freeze({
+const locale: Locale = {
     localeName: 'ru',
     useAuthLink: (authLink) => link = authLink,
 
@@ -50,6 +50,6 @@ const locale: Locale = Object.freeze({
                 .reduce((acc, curr) => `${acc}\n\n${curr}`, `С кем вы связаны:`);
         } else return `Долгов нет.`;
     }
-});
+};
 
 export default locale;
