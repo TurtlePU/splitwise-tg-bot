@@ -22,27 +22,22 @@ export default async function start({ token, url }: StartOptions) {
         return oldSendMessage(chatId, text, { parse_mode: 'Markdown', ...options });
     };
 
+    bot.onText(/.*/, msg => msg.from && updateUserName(msg.from.id, getName(msg.from)));
+
     commands.forEach(command => {
+        const clb = command.callback(bot);
+        const call = (msg: TelegramBot.Message, match: RegExpExecArray | null) =>
+            clb({ msg, match, locale: getLocaledUi(msg.from && msg.from.language_code) });
         if (requiresFrom(command)) {
-            bot.onText(command.regexp, async (msg, match) => {
+            bot.onText(command.regexp, (msg, match) => {
                 if (msg.from) {
-                    await updateUserName(msg.from.id, getName(msg.from))
-                    command.callback(bot)({
-                        msg, match, locale: getLocaledUi(msg.from && msg.from.language_code)
-                    });
+                    call(msg, match);
                 } else {
                     bot.sendMessage(msg.chat.id, getLocaledUi().anon);
                 }
             });
         } else {
-            bot.onText(command.regexp, async (msg, match) => {
-                if (msg.from) {
-                    await updateUserName(msg.from.id, getName(msg.from))
-                }
-                command.callback(bot)({
-                    msg, match, locale: getLocaledUi(msg.from && msg.from.language_code)
-                });
-            });
+            bot.onText(command.regexp, (msg, match) => call(msg, match));
         }
     });
 
