@@ -1,8 +1,8 @@
 import { friends, User } from '@api';
 import { getUserById } from '@storage';
+import { getName } from '@util/user';
 
 import { Command } from './command';
-import { getName } from '@util';
 
 const command: Command = {
     regexp: /^\/stats$/,

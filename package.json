@@ -44,6 +44,6 @@
     "@storage": "build/storage/export.js",
     "@api": "build/splitwise/api.js",
     "@token": "build/splitwise/core.js",
-    "@util": "build/util.js"
+    "@util": "build/util"
   }
 }

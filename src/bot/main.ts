@@ -4,7 +4,7 @@ import Bot from 'node-telegram-bot-api';
 import commands from '@commands';
 import { getLocaledUi } from '@locale';
 import { updateUserName } from '@storage';
-import { getName } from '@util';
+import { getName } from '@util/user';
 
 export interface StartOptions {
     token: string;

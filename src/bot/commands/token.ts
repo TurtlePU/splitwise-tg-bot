@@ -1,7 +1,7 @@
 import { me } from '@api';
 import { saveUser, getUserById } from '@storage';
 import { redeemToken } from '@token';
-import { getName } from '@util';
+import { getName } from '@util/user';
 
 import { Command } from './command';
 
