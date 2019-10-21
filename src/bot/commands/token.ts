@@ -1,10 +1,11 @@
+import TelegramBot from 'node-telegram-bot-api';
+
 import { me } from '@api';
 import { saveUser, getUserById } from '@storage';
 import { redeemToken } from '@token';
 import { getName } from '@util/user';
 
 import { Command } from './command';
-import TelegramBot = require('node-telegram-bot-api');
 
 const command: Command<{ from: TelegramBot.User }> = {
     regexp: /^\/start (.*)$/,
