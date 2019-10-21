@@ -5,8 +5,8 @@ import commands from '@commands';
 import { getLocaledUi } from '@locale';
 import { updateUserName } from '@storage';
 import { getName } from '@util/user';
+
 import { Command } from './commands/command';
-import TelegramBot from 'node-telegram-bot-api';
 
 export interface StartOptions {
     token: string;
@@ -26,7 +26,7 @@ export default async function start({ token, url }: StartOptions) {
 
     commands.forEach(command => {
         const clb = command.callback(bot);
-        const call = (msg: TelegramBot.Message, match: RegExpExecArray | null) =>
+        const call = (msg: Bot.Message, match: RegExpExecArray | null) =>
             clb({ msg, match, locale: getLocaledUi(msg.from && msg.from.language_code) });
         if (requiresFrom(command)) {
             bot.onText(command.regexp, (msg, match) => {
@@ -48,6 +48,6 @@ export default async function start({ token, url }: StartOptions) {
 };
 
 function requiresFrom(command: Command<any>): boolean {
-    const c = (command as Command<{ from: TelegramBot.User }>);
+    const c = (command as Command<{ from: Bot.User }>);
     return c.requirements && c.requirements.from;
 }
