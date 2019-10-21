@@ -1,31 +1,30 @@
+import TelegramBot from 'node-telegram-bot-api';
+
 import { friends, User } from '@api';
 import { getUserById } from '@storage';
 import { getName } from '@util/user';
 
 import { Command } from './command';
 
-const command: Command = {
+const command: Command<{ from: TelegramBot.User }> = {
     regexp: /^\/stats$/,
+    requirements: {
+        from: true
+    },
     callback: bot => async ({ msg, locale }) => {
         let message: string;
-        if (msg.from) {
-            const user = await getUserById({ tg: msg.from.id });
-            if (user) {
-                message = locale.stats(
-                    await Promise.all(
-                        (await friends(user.swToken))
-                            .filter(friend => friend.balance.length)
-                            .map(async friend => ({
-                                name: await getNameAsync(friend),
-                                balance: friend.balance
-                            }))
-                    )
-                );
-            } else {
-                message = locale.noAuth();
-            }
+        const user = await getUserById({ tg: msg.from.id });
+        if (!user) {
+            message = locale.noAuth();
         } else {
-            message = locale.anon;
+            message = locale.stats(await Promise.all(
+                (await friends(user.swToken))
+                    .filter(friend => friend.balance.length)
+                    .map(async friend => ({
+                        name: await getNameAsync(friend),
+                        balance: friend.balance
+                    }))
+            ));
         }
         bot.sendMessage(msg.chat.id, message);
     }

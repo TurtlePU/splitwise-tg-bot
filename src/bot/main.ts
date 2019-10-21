@@ -5,6 +5,8 @@ import commands from '@commands';
 import { getLocaledUi } from '@locale';
 import { updateUserName } from '@storage';
 import { getName } from '@util/user';
+import { Command } from './commands/command';
+import TelegramBot from 'node-telegram-bot-api';
 
 export interface StartOptions {
     token: string;
@@ -20,15 +22,28 @@ export default async function start({ token, url }: StartOptions) {
         return oldSendMessage(chatId, text, { parse_mode: 'Markdown', ...options });
     };
 
-    commands.forEach(({ regexp, callback }) => {
-        bot.onText(regexp, async (msg, match) => {
-            if (msg.from) {
-                await updateUserName(msg.from.id, getName(msg.from))
-            }
-            callback(bot)({
-                msg, match, locale: getLocaledUi(msg.from && msg.from.language_code)
+    commands.forEach(command => {
+        if (requiresFrom(command)) {
+            bot.onText(command.regexp, async (msg, match) => {
+                if (msg.from) {
+                    await updateUserName(msg.from.id, getName(msg.from))
+                    command.callback(bot)({
+                        msg, match, locale: getLocaledUi(msg.from && msg.from.language_code)
+                    });
+                } else {
+                    bot.sendMessage(msg.chat.id, getLocaledUi().anon);
+                }
             });
-        });
+        } else {
+            bot.onText(command.regexp, async (msg, match) => {
+                if (msg.from) {
+                    await updateUserName(msg.from.id, getName(msg.from))
+                }
+                command.callback(bot)({
+                    msg, match, locale: getLocaledUi(msg.from && msg.from.language_code)
+                });
+            });
+        }
     });
 
     return (req: Express.Request, res: Express.Response) => {
@@ -36,3 +51,8 @@ export default async function start({ token, url }: StartOptions) {
         res.sendStatus(200);
     };
 };
+
+function requiresFrom(command: Command<any>): boolean {
+    const c = (command as Command<{ from: TelegramBot.User }>);
+    return c.requirements && c.requirements.from;
+}

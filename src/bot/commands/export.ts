@@ -1,6 +1,6 @@
 import { Command } from './command';
 
-const commands: Command[] = [
+const commands: Command<any>[] = [
     require('./auth').default,
     require('./help').default,
     require('./start').default,

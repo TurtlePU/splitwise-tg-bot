@@ -4,30 +4,30 @@ import { redeemToken } from '@token';
 import { getName } from '@util/user';
 
 import { Command } from './command';
+import TelegramBot = require('node-telegram-bot-api');
 
-const command: Command = {
+const command: Command<{ from: TelegramBot.User }> = {
     regexp: /^\/start (.*)$/,
+    requirements: {
+        from: true
+    },
     callback: bot => async ({ msg, match, locale }) => {
         let message: string;
-        if (msg.from) {
-            const token = (match as RegExpExecArray)[1];
-            if (!redeemToken(token)) {
-                message = locale.start(
-                    msg.from.first_name,
-                    !!await getUserById({ tg: msg.from.id })
-                );
-            } else {
-                await Promise.all([
-                    bot.sendMessage(msg.chat.id, locale.onToken),
-                    saveUser({
-                        id: { tg: msg.from.id, sw: (await me(token)).id },
-                        name: getName(msg.from), token
-                    })
-                ]);
-                message = locale.onTokenSaved;
-            }
+        const token = (match as RegExpExecArray)[1];
+        if (!redeemToken(token)) {
+            message = locale.start(
+                msg.from.first_name,
+                !!await getUserById({ tg: msg.from.id })
+            );
         } else {
-            message = locale.anon;
+            await Promise.all([
+                bot.sendMessage(msg.chat.id, locale.onToken),
+                saveUser({
+                    id: { tg: msg.from.id, sw: (await me(token)).id },
+                    name: getName(msg.from), token
+                })
+            ]);
+            message = locale.onTokenSaved;
         }
         bot.sendMessage(msg.chat.id, message);
     }
