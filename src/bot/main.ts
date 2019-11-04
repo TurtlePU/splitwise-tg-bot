@@ -49,5 +49,5 @@ export default async function start({ token, url }: StartOptions) {
 
 function requiresFrom(command: Command<any>): boolean {
     const c = (command as Command<{ from: Bot.User }>);
-    return c.requirements && c.requirements.from;
+    return !!c.requirements && !!c.requirements.from;
 }

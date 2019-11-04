@@ -4,13 +4,14 @@ import { friends, User } from '@api';
 import { getUserById } from '@storage';
 import { getName } from '@util/user';
 
-import { Command } from './command';
+import { makeCommand } from './wrapper';
 
-const command: Command<{ from: TelegramBot.User }> = {
+const command = makeCommand(
+{
+    from: {} as TelegramBot.User
+},
+{
     regexp: /^\/stats$/,
-    requirements: {
-        from: true
-    },
     callback: bot => async ({ msg, locale }) => {
         let message: string;
         const user = await getUserById({ tg: msg.from.id });
@@ -28,7 +29,7 @@ const command: Command<{ from: TelegramBot.User }> = {
         }
         bot.sendMessage(msg.chat.id, message);
     }
-};
+});
 
 export default command;
 

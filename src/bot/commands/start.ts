@@ -2,19 +2,20 @@ import TelegramBot from 'node-telegram-bot-api';
 
 import { getUserById } from '@storage';
 
-import { Command } from './command';
+import { makeCommand } from './wrapper';
 
-const command: Command<{ from: TelegramBot.User }> = {
+const command = makeCommand(
+{
+    from: {} as TelegramBot.User
+},
+{
     regexp: /^\/start$/,
-    requirements: {
-        from: true
-    },
     callback: bot => async ({ msg, locale }) => {
         bot.sendMessage(msg.chat.id, locale.start(
             msg.from.first_name,
             !!await getUserById({ tg: msg.from.id })
         ));
     }
-};
+});
 
 export default command;

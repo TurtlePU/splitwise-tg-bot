@@ -6,9 +6,11 @@ declare type Message<MType> = {
     locale: Locale
 };
 
-declare type Command<MType> = {
+declare type CommandProto<MType> = {
     regexp: RegExp;
     callback: (bot: TelegramBot) => (msg: Message<MType>) => void;
-} & ({} extends MType ? {} : {
-    requirements: { [Key in keyof MType]: true };
-});
+};
+
+declare type Command<MType> = CommandProto<MType> & {
+    requirements: MType;
+};

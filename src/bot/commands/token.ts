@@ -5,13 +5,14 @@ import { saveUser, getUserById } from '@storage';
 import { redeemToken } from '@token';
 import { getName } from '@util/user';
 
-import { Command } from './command';
+import { makeCommand } from './wrapper';
 
-const command: Command<{ from: TelegramBot.User }> = {
+const command = makeCommand(
+{
+    from: {} as TelegramBot.User
+},
+{
     regexp: /^\/start (.*)$/,
-    requirements: {
-        from: true
-    },
     callback: bot => async ({ msg, match, locale }) => {
         let message: string;
         const token = (match as RegExpExecArray)[1];
@@ -32,6 +33,6 @@ const command: Command<{ from: TelegramBot.User }> = {
         }
         bot.sendMessage(msg.chat.id, message);
     }
-};
+});
 
 export default command;

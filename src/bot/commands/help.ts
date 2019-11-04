@@ -1,10 +1,10 @@
-import { Command } from './command';
+import { makeSimpleCommand } from './wrapper';
 
-const command: Command<{}> = {
+const command = makeSimpleCommand({
     regexp: /^\/help$/,
     callback: bot => ({ msg, locale }) => {
         bot.sendMessage(msg.chat.id, locale.help);
     }
-};
+});
 
 export default command;
